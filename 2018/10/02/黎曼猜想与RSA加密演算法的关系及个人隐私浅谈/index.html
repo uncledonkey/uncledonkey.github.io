@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言2018年9月24日，英国著名数学家迈克尔·阿蒂亚爵士在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黎曼猜想与RSA加密演算法的关系及个人隐私浅谈">
+<meta property="og:url" content="http://yoursite.com/2018/10/02/黎曼猜想与RSA加密演算法的关系及个人隐私浅谈/index.html">
+<meta property="og:site_name" content="Uncle Doneky">
+<meta property="og:description" content="前言2018年9月24日，英国著名数学家迈克尔·阿蒂亚爵士在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-19T03:53:50.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="黎曼猜想与RSA加密演算法的关系及个人隐私浅谈">
+<meta name="twitter:description" content="前言2018年9月24日，英国著名数学家迈克尔·阿蒂亚爵士在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/02/黎曼猜想与RSA加密演算法的关系及个人隐私浅谈/">
+
+
+
+
+
+  <title>黎曼猜想与RSA加密演算法的关系及个人隐私浅谈 | Uncle Doneky</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Doneky</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/黎曼猜想与RSA加密演算法的关系及个人隐私浅谈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.Song">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Doneky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">黎曼猜想与RSA加密演算法的关系及个人隐私浅谈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-02T22:51:03+00:00">
+                2018-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2018年9月24日，英国著名数学家<a href="https://en.wikipedia.org/wiki/Michael_Atiyah" target="_blank" rel="noopener">迈克尔·阿蒂亚爵士</a>在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。<br>各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，<em>黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全</em>，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。</p>
+<h2 id="什么是黎曼猜想"><a href="#什么是黎曼猜想" class="headerlink" title="什么是黎曼猜想"></a>什么是黎曼猜想</h2><p>对于驴叔这种深知自己一瓶子不满半瓶子晃荡的人来说，不误人子弟是驴叔的基本操守。对于黎曼猜想，百科链接放在这里：<a href="https://baike.baidu.com/item/黎曼假设" target="_blank" rel="noopener">百度</a>,<a href="https://zh.wikipedia.org/wiki/%E9%BB%8E%E6%9B%BC%E7%8C%9C%E6%83%B3" target="_blank" rel="noopener">Wikipedia</a>。而驴叔要说的是：黎曼猜想的主要内容之一是素数(质数)定理，稍有常识的人都会知道，<strong>质数定义为在大于1的自然数中，除了1和它本身以外不再有其他因数。</strong>在数轴上越靠右的数字，判断它是否为质数的难度就越大。直至现在，民用计算领域在质数检测和大数分解问题上依然难以找到高效可行的办法，而黎曼猜想其实就可以称之为<strong>给出了数字 x 以内更精确的质数个数的公式。</strong>但是自黎曼猜想提出的近160年来，至今也无人能够证明。<br>既然大数分解和质数检测很难，自然为密码学提供了一个契机。这就要讲到驴叔唯一接触使用并稍稍了解的密码:RSA</p>
+<h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p><a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem" target="_blank" rel="noopener">RSA Cryptosystem</a><br>为了简单介绍，驴叔在维基百科做了摘录</p>
+<blockquote>
+<p>公钥与私钥的产生</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>假设Alice想要通过一个不可靠的媒体接收Bob的一条私人消息。她可以用以下的方式来产生一个公钥和一个私钥：</p>
+<ul>
+<li>随意选择两个大的质数 p和 q，  p不等于 q ，计算 N = p q  N=pq。</li>
+<li>根据欧拉函数，求得 r = φ ( N  ) = φ ( p ) φ ( q ) = ( p − 1 ) ( q − 1 ) </li>
+<li>选择一个小于  r的整数  e，使  e与 r互质。并求得 e 关于 r的模 反元素，命名为 d (求  d令 e d ≡ 1 ( mod r ) 。（模反元素存在，当且仅当 e与  r互质）</li>
+<li>将  p和  q的记录销毁。<br>( N , e ) 是公钥， ( N , d ) 是私钥。Alice将她的公钥 ( N , e ) 传给Bob，而将她的私钥 ( N , d ) 藏起来。 </li>
+</ul>
+</blockquote>
+</blockquote>
+<p>如果你看得懂，你应该会对这个密码的思路有一个简单的了解；如果你看不懂，我想你应该会觉得这个东西很牛逼。驴叔与网站服务器的连接就是通过RSA加密，理论上民用计算设备想破解很难，如果上升到Gov或者Military层面，利用超级计算机应该会在某个时间点能破解，但是这种高额成本势必针对高价值目标。你驴叔还是洗洗睡。<br>RSA加密离我们也并不遥远，银行系统的数据传输，你与驴叔网站连接等都是经过加密的（可以点一下网址旁边的小锁头），经过加密的连接，可以在一定程度上保护你传输信息的私密性，例如信用卡及密码。而这就要说到重头戏“个人隐私”了</p>
+<h2 id="个人隐私"><a href="#个人隐私" class="headerlink" title="个人隐私"></a>个人隐私</h2><p>随着网络技术的发展，对个人隐私的侵犯越演愈烈，NSA的<a href="https://zh.wikipedia.org/wiki/%E7%A8%9C%E9%8F%A1%E8%A8%88%E7%95%AB" target="_blank" rel="noopener">棱镜计划</a>，facebook的隐私丑闻等都在欧美国家引起轩然大波，在某些国家的某公司CEO甚至说出这种话:中国人愿意用隐私换便利。驴叔了然很多人对隐私嗤之以鼻，对于一些反智主义的言论也不想评论。推荐一个TED演讲-<a href="https://www.ted.com/talks/glenn_greenwald_why_privacy_matters" target="_blank" rel="noopener">为何隐私如此重要</a>。毫不夸张地说，当你的任何电子设备连接上互联网，它可以暴露你的一切。你的家庭网络摄像头，在你轻松观看家中情况的同时，也可以悄悄记录你在家中的点点滴滴，见得人的见不得人的，只要别有用心的人想得到，一切可以来的很轻易；你随身携带的手机，轻轻松松记录了你去过那里，说过什么话，以至于有些应用可以在你毫不知情的情况下打开你的前置摄像头，麦克风，而你不会有任何察觉。</p>
+<h3 id="隐私泛滥的幕后推手"><a href="#隐私泛滥的幕后推手" class="headerlink" title="隐私泛滥的幕后推手"></a>隐私泛滥的幕后推手</h3><p>在你享受着越来越便利的个性化服务的同时，隐私数据其实已经泛滥成灾。而拥有最庞大隐私数据的组织，就是商业公司。这里要点名谷歌，苹果，微软，Facebook等巨头企业，打着崇高的旗号做着最肮脏的勾当，棱镜项目从来不缺少他们的参与，在美国这种自诩最民主法治尊重人权国家，NSA这种行为与美国精神完全背道而驰。而在某朝则完全没有这种情况，商业公司不需要施压就可以乖乖的将所有数据上交给Gov，甚至可以配合其对信息的审查与管制，具体的就不再赘述。也许你可能觉得危言耸听，但是驴叔真真切切看过窃取隐私的作品，数目之庞大，数据之精确，影像之清晰至今历历在目。之所以这些数据能够被窃取公开，并不是因为这些黑客技术有多高明，而是商业公司根本就没有对隐私信息加密处理。凡是利益驱动的组织，就不要妄想他们有什么道德。</p>
+<h3 id="个人隐私普遍暴露的途径"><a href="#个人隐私普遍暴露的途径" class="headerlink" title="个人隐私普遍暴露的途径"></a>个人隐私普遍暴露的途径</h3><p>驴叔想到那里就写到哪里</p>
+<ul>
+<li>网络云盘：X度云，iCloud云X贵州（iCloud自己也出过事），各手机厂商的云备份</li>
+<li>即时通讯：X信，XQ（某讯的产品甚至还用明文传输），Skype及任何非端到端通讯软件</li>
+<li>操作系统及软件破解：苹果I系统的“越狱”，Android系统的“root”，及付费软件的破解，都会降低你设备的安全性</li>
+<li>数据库暴库：涉及个人信息的数据库被攻破（华住酒店入住信息）</li>
+<li>执法部门调查：自己作死，无解</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>网络上讲隐私的文章很多，比驴叔写得好数不胜数，驴叔只是借黎曼猜想这个事件再来提一下个人隐私安全，希望赏光看这篇文章的朋友能够对隐私问题重视起来，自己可以深入了解，也希望对这些有兴趣的朋友在评论区进行交流。个人水平有限，如有错误望指正，部分内容来自互联网，侵权请联系，我会及时删除。</p>
+<p>部分资料来源：维基百科，百度百科，知乎</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/31/再见驴叔/" rel="prev" title="再见驴叔">
+                再见驴叔 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Mr.Song</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是黎曼猜想"><span class="nav-number">2.</span> <span class="nav-text">什么是黎曼猜想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSA"><span class="nav-number">3.</span> <span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人隐私"><span class="nav-number">4.</span> <span class="nav-text">个人隐私</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#隐私泛滥的幕后推手"><span class="nav-number">4.1.</span> <span class="nav-text">隐私泛滥的幕后推手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#个人隐私普遍暴露的途径"><span class="nav-number">4.2.</span> <span class="nav-text">个人隐私普遍暴露的途径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
