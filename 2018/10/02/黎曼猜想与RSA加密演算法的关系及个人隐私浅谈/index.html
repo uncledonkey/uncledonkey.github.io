@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Uncle Doneky">
 <meta property="og:description" content="前言2018年9月24日，英国著名数学家迈克尔·阿蒂亚爵士在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-19T03:53:50.945Z">
+<meta property="og:updated_time" content="2019-05-19T04:58:35.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="黎曼猜想与RSA加密演算法的关系及个人隐私浅谈">
 <meta name="twitter:description" content="前言2018年9月24日，英国著名数学家迈克尔·阿蒂亚爵士在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。">
@@ -299,7 +299,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2018年9月24日，英国著名数学家<a href="https://en.wikipedia.org/wiki/Michael_Atiyah" target="_blank" rel="noopener">迈克尔·阿蒂亚爵士</a>在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。<br>各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，<em>黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全</em>，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2018年9月24日，英国著名数学家<a href="https://en.wikipedia.org/wiki/Michael_Atiyah" target="_blank" rel="noopener">迈克尔·阿蒂亚爵士</a>在德国海德堡论坛进行演讲，论证不久前其宣称证明了黎曼猜想。这个消息震惊了数学界，也在某朝引起了一定的关注。<br>各种关于黎曼猜想的新闻也纷纷推送给了驴叔这样的数学白痴，<em>黎曼猜想得到证明，颠覆密码界，区块链技术或将不再安全</em>，这种标题党成功吸引了驴叔的眼球。虽然最终这场证明最终并没有达到他证明的目的，但是驴叔在对这个事件跟进的过程中也收获到了很多。<a id="more"></a></p>
 <h2 id="什么是黎曼猜想"><a href="#什么是黎曼猜想" class="headerlink" title="什么是黎曼猜想"></a>什么是黎曼猜想</h2><p>对于驴叔这种深知自己一瓶子不满半瓶子晃荡的人来说，不误人子弟是驴叔的基本操守。对于黎曼猜想，百科链接放在这里：<a href="https://baike.baidu.com/item/黎曼假设" target="_blank" rel="noopener">百度</a>,<a href="https://zh.wikipedia.org/wiki/%E9%BB%8E%E6%9B%BC%E7%8C%9C%E6%83%B3" target="_blank" rel="noopener">Wikipedia</a>。而驴叔要说的是：黎曼猜想的主要内容之一是素数(质数)定理，稍有常识的人都会知道，<strong>质数定义为在大于1的自然数中，除了1和它本身以外不再有其他因数。</strong>在数轴上越靠右的数字，判断它是否为质数的难度就越大。直至现在，民用计算领域在质数检测和大数分解问题上依然难以找到高效可行的办法，而黎曼猜想其实就可以称之为<strong>给出了数字 x 以内更精确的质数个数的公式。</strong>但是自黎曼猜想提出的近160年来，至今也无人能够证明。<br>既然大数分解和质数检测很难，自然为密码学提供了一个契机。这就要讲到驴叔唯一接触使用并稍稍了解的密码:RSA</p>
 <h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p><a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem" target="_blank" rel="noopener">RSA Cryptosystem</a><br>为了简单介绍，驴叔在维基百科做了摘录</p>
 <blockquote>
